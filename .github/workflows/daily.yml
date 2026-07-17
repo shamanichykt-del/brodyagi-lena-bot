@@ -1,0 +1,29 @@
+name: Brodyagi Bot
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Скачать проект
+        uses: actions/checkout@v4
+
+      - name: Установить Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Установить зависимости
+        run: |
+          pip install -r requirements.txt
+
+      - name: Запустить бота
+        env:
+          MAX_TOKEN: ${{ secrets.MAX_TOKEN }}
+          OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
+          CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+        run: |
+          python main.py
